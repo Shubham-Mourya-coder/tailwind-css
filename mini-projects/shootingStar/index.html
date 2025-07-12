@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./image/favicon.ico" />
+    <title>Starfield with Shooting Stars</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #000, #050505);
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* ============================
+       STARFIELD (3D Layered Stars)
+    ============================ */
+      .star-field {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        perspective: 600px;
+        z-index: -2;
+      }
+
+      .star-field .layer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 4px;
+        width: 4px;
+        border-radius: 2px;
+        transform-style: preserve-3d;
+        box-shadow: -411px -476px #cccccc, 777px -407px #d4d4d4,
+          -387px -477px #fcfcfc, 596px 378px #cccccc, 647px 423px whitesmoke,
+          183px 389px #c7c7c7, 524px -237px #f0f0f0, 679px -535px #e3e3e3,
+          158px 399px #ededed, 157px 249px #ededed, 81px -450px #ebebeb,
+          719px -360px #c2c2c2;
+      }
+
+      .star-field .layer:nth-child(1) {
+        animation: sf-fly-by-1 5s linear infinite;
+      }
+      .star-field .layer:nth-child(2) {
+        animation: sf-fly-by-2 5s linear infinite;
+      }
+      .star-field .layer:nth-child(3) {
+        animation: sf-fly-by-3 5s linear infinite;
+      }
+
+      @keyframes sf-fly-by-1 {
+        from {
+          transform: translateZ(-600px);
+          opacity: 0.5;
+        }
+        to {
+          transform: translateZ(0);
+          opacity: 0.5;
+        }
+      }
+      @keyframes sf-fly-by-2 {
+        from {
+          transform: translateZ(-1200px);
+          opacity: 0.5;
+        }
+        to {
+          transform: translateZ(-600px);
+          opacity: 0.5;
+        }
+      }
+      @keyframes sf-fly-by-3 {
+        from {
+          transform: translateZ(-1800px);
+          opacity: 0.5;
+        }
+        to {
+          transform: translateZ(-1200px);
+          opacity: 0.5;
+        }
+      }
+
+      /* ============================
+       TWINKLING STARS
+    ============================ */
+      .stars {
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        background: white;
+        box-shadow: 5vw 5vh white, 15vw 20vh white, 25vw 30vh white,
+          35vw 15vh white, 50vw 10vh white, 60vw 35vh white;
+        animation: twinkle 4s infinite ease-in-out;
+        z-index: -1;
+      }
+
+      .stars::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        background: white;
+        box-shadow: 70vw 25vh white, 80vw 10vh white, 90vw 35vh white,
+          20vw 60vh white, 30vw 70vh white, 40vw 50vh white;
+        animation: twinkle 6s infinite ease-in-out reverse;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.8;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
+
+      /* ============================
+       CSS SHOOTING STARS
+    ============================ */
+      section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        pointer-events: none;
+      }
+
+      section span {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+          0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+        animation: animate 3s linear infinite;
+      }
+
+      section span::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 300px;
+        height: 1px;
+        background: linear-gradient(90deg, #fff, transparent);
+      }
+
+      @keyframes animate {
+        0% {
+          transform: rotate(315deg) translateX(0);
+          opacity: 1;
+        }
+        70% {
+          opacity: 1;
+        }
+        100% {
+          transform: rotate(315deg) translateX(-1000px);
+          opacity: 0;
+        }
+      }
+
+      /* Only 2 stars kept: 1st and 10th */
+      section span:nth-child(1) {
+        top: 0;
+        right: 0;
+        animation-delay: 0s;
+        animation-duration: 1.5s;
+      }
+
+      section span:nth-child(10) {
+        top: 0;
+        right: 450px;
+        animation-delay: 2.5s;
+        animation-duration: 2.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 3D Moving Star Background -->
+    <div class="star-field">
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+    </div>
+
+    <!-- Twinkling Background Stars -->
+    <div class="stars"></div>
+
+    <!-- Shooting Stars (Top Layer) -->
+    <section>
+      <span></span>
+      <!-- 1st star -->
+      <span></span>
+      <!-- 10th star -->
+    </section>
+  </body>
+</html>
